@@ -1,6 +1,6 @@
 # bhawik
 
-Project stated on 14 May by Bhawik Jain
+Project stated on 14 May by Bhawik Jain.
 
 ## Getting Started
 
