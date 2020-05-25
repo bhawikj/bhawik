@@ -1,8 +1,11 @@
+// import 'package:bhawik/services/auth.dart';
+import 'package:bhawik/viewmodels/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bhawik/utilities/constants.dart';
 import 'package:bhawik/screens/signup_screen.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider_architecture/viewmodel_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -12,7 +15,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
   DateTime backbuttonPressedtime;
-
+  TextEditingController _emailInpCont = new TextEditingController();
+  TextEditingController _passInpCont = new TextEditingController();
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _emailInpCont,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
               color: Colors.white,
@@ -47,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,6 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
+            controller: _passInpCont,
             obscureText: true,
             style: TextStyle(
               color: Colors.white,
@@ -81,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
+
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
@@ -94,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
   Widget _buildRememberMeCheckbox() {
     return Container(
       height: 20.0,
@@ -120,13 +129,13 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  Widget _buildLoginBtn() {
+
+  Widget _buildLoginBtn(LoginViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () => print('Login Button Pressed'),
         padding: EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
@@ -142,9 +151,15 @@ class _LoginScreenState extends State<LoginScreen> {
             fontFamily: 'OpenSans',
           ),
         ),
+        onPressed: () async {
+          model.login(email: _emailInpCont.text, password: _passInpCont.text);
+          // String uid =
+          //     await Auth().signIn(_emailInpCont.text, _passInpCont.text);
+        },
       ),
     );
   }
+
   /*Widget _buildSignInWithText() {
     return Column(
       children: <Widget>[
@@ -243,81 +258,155 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  // Widget build(BuildContext context) {
+  //   return WillPopScope(
+  //     onWillPop: onWillPop,
+  //     child: new Scaffold(
+  //       body: AnnotatedRegion<SystemUiOverlayStyle>(
+  //         value: SystemUiOverlayStyle.light,
+  //         child: GestureDetector(
+  //           onTap: () => FocusScope.of(context).unfocus(),
+  //           child: Stack(
+  //             children: <Widget>[
+  //               Container(
+  //                 height: double.infinity,
+  //                 width: double.infinity,
+  //                 decoration: BoxDecoration(
+  //                   gradient: LinearGradient(
+  //                     begin: Alignment.topCenter,
+  //                     end: Alignment.bottomCenter,
+  //                     colors: [
+  //                       Color(0xFF3594DD),
+  //                       Color(0xFF4563DB),
+  //                       Color(0xFF5036D5),
+  //                       Color(0xFF5B16D0),
+  //                     ],
+  //                     stops: [0.1, 0.4, 0.7, 0.9],
+  //                   ),
+  //                 ),
+  //               ),
+  //               Container(
+  //                 height: double.infinity,
+  //                 child: SingleChildScrollView(
+  //                   physics: AlwaysScrollableScrollPhysics(),
+  //                   padding: EdgeInsets.symmetric(
+  //                     horizontal: 40.0,
+  //                     vertical: 90.0,
+  //                   ),
+  //                   child: Column(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: <Widget>[
+  //                       Text(
+  //                         'Hello There.',
+  //                         style: TextStyle(
+  //                           color: Colors.white,
+  //                           fontFamily: 'OpenSans',
+  //                           fontSize: 30.0,
+  //                           fontWeight: FontWeight.bold,
+  //                         ),
+  //                       ),
+  //                       SizedBox(height: 30.0),
+  //                       _buildEmailTF(),
+  //                       SizedBox(
+  //                         height: 30.0,
+  //                       ),
+  //                       _buildPasswordTF(),
+  //                       _buildForgotPasswordBtn(),
+  //                       _buildRememberMeCheckbox(),
+  //                       _buildLoginBtn(),
+  //                       /*_buildSignInWithText(),
+  //                     _buildSocialBtnRow(),*/
+  //                       _buildSignupBtn(),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: onWillPop,
-      child: new Scaffold(
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF3594DD),
-                        Color(0xFF4563DB),
-                        Color(0xFF5036D5),
-                        Color(0xFF5B16D0),
-                      ],
-                      stops: [0.1, 0.4, 0.7, 0.9],
+    return ViewModelProvider<LoginViewModel>.withConsumer(
+      viewModel: LoginViewModel(),
+      builder: (context, model, child) => WillPopScope(
+        onWillPop: onWillPop,
+        child: new Scaffold(
+          body: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle.light,
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    height: double.infinity,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFF3594DD),
+                          Color(0xFF4563DB),
+                          Color(0xFF5036D5),
+                          Color(0xFF5B16D0),
+                        ],
+                        stops: [0.1, 0.4, 0.7, 0.9],
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  height: double.infinity,
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 40.0,
-                      vertical: 90.0,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          'Hello There.',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'OpenSans',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
+                  Container(
+                    height: double.infinity,
+                    child: SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 40.0,
+                        vertical: 90.0,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Hello There.',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 30.0),
-                        _buildEmailTF(),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        _buildPasswordTF(),
-                        _buildForgotPasswordBtn(),
-                        _buildRememberMeCheckbox(),
-                        _buildLoginBtn(),
-                        /*_buildSignInWithText(),
+                          SizedBox(height: 30.0),
+                          _buildEmailTF(),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildPasswordTF(),
+                          _buildForgotPasswordBtn(),
+                          _buildRememberMeCheckbox(),
+                          _buildLoginBtn(model),
+                          /*_buildSignInWithText(),
                       _buildSocialBtnRow(),*/
-                        _buildSignupBtn(),
-                      ],
+                          _buildSignupBtn(),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
+
   Future<bool> onWillPop() async {
     DateTime currentTime = DateTime.now();
     //
     bool backbutton = backbuttonPressedtime == null ||
-        currentTime.difference(backbuttonPressedtime) > Duration( seconds: 3);
+        currentTime.difference(backbuttonPressedtime) > Duration(seconds: 3);
     if (backbutton) {
       backbuttonPressedtime = currentTime;
       Fluttertoast.showToast(

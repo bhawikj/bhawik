@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "440384405629",
+    "firebase_url": "https://projectbnn-22118.firebaseio.com",
+    "project_id": "projectbnn-22118",
+    "storage_bucket": "projectbnn-22118.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440384405629:android:77ae3f12f30cd4a5713114",
+        "android_client_info": {
+          "package_name": "com.bnn.bhawik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440384405629-v46btjlmm0tkkn3l87dtdi6pkv1hfl9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnAT6T5VGHhkSWVm4H5YqnldYKQsYkeD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "440384405629-v46btjlmm0tkkn3l87dtdi6pkv1hfl9t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
