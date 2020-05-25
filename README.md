@@ -1,6 +1,6 @@
 # bhawik
 
-A new Flutter application.
+Project stated on 14 May by Bhawik Jain
 
 ## Getting Started
 
