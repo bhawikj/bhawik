@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:bhawik/utilities/route_names.dart';
 import 'package:bhawik/screens/login_screen.dart';
 import 'package:bhawik/screens/signup_screen.dart';
+import 'package:bhawik/screens/onboarding_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -20,6 +21,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settings.name,
         viewToShow: Home(),
+      );
+    case StartUpRoute:
+      return _getPageRoute(
+        routeName: settings.name,
+        viewToShow: OnboardingScreen(),
       );
     default:
       return MaterialPageRoute(

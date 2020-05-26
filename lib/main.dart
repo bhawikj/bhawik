@@ -1,7 +1,9 @@
 import 'package:bhawik/locator.dart';
+import 'package:bhawik/screens/start_up.dart';
 import 'package:bhawik/services/dialog_service.dart';
 import 'package:bhawik/services/navigation_service.dart';
 import 'package:bhawik/utilities/router.dart';
+import 'package:bhawik/viewmodels/startup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'managers/dialog_manager.dart';
 import 'package:bhawik/screens/onboarding_screen.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: locator<NavigationService>().navigationKey,
       debugShowCheckedModeBanner: false,
-      home: OnboardingScreen(),
+      home: StartUpView(),
       onGenerateRoute: generateRoute,
     );
   }

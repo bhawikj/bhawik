@@ -16,12 +16,14 @@ class AuthenticationService {
     @required String password,
   }) async {
     try {
-      var authResult = await _firebaseAuth.signInWithEmailAndPassword(
+      FirebaseUser user = (await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      );
-      await _populateCurrentUser(authResult.user);
-      return authResult.user != null;
+      ))
+          .user;
+      debugPrint(user.email);
+      _populateCurrentUser(user);
+      return user != null;
     } catch (e) {
       return e.message;
     }
@@ -45,7 +47,7 @@ class AuthenticationService {
         fullName: fullName,
       );
 
-      await _firestoreService.createUser(_currentUser);
+      _firestoreService.createUser(_currentUser);
       debugPrint(authResult.user.uid);
       return authResult.user != null;
     } catch (e) {
@@ -55,7 +57,7 @@ class AuthenticationService {
 
   Future<bool> isUserLoggedIn() async {
     var user = await _firebaseAuth.currentUser();
-    await _populateCurrentUser(user);
+    _populateCurrentUser(user);
     return user != null;
   }
 
