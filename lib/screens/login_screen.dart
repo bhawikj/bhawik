@@ -1,5 +1,6 @@
 // import 'package:bhawik/services/auth.dart';
 import 'package:bhawik/viewmodels/login_view_model.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bhawik/utilities/constants.dart';
@@ -17,6 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   DateTime backbuttonPressedtime;
   TextEditingController _emailInpCont = new TextEditingController();
   TextEditingController _passInpCont = new TextEditingController();
+
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +34,16 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            validator: (String val) {
+              if (val.isEmpty) {
+                return "Email is required";
+              }
+              if (!EmailValidator.validate(val)) {
+                return "Enter a valid email";
+              }
+              return null;
+            },
             controller: _emailInpCont,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
@@ -66,7 +79,13 @@ class _LoginScreenState extends State<LoginScreen> {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
+            validator: (String val) {
+              if (val.isEmpty) {
+                return "Password cannot be empty";
+              }
+              return null;
+            },
             controller: _passInpCont,
             obscureText: true,
             style: TextStyle(
@@ -152,7 +171,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         onPressed: () async {
-          model.login(email: _emailInpCont.text, password: _passInpCont.text);
+          if (_formkey.currentState.validate()) {
+            model.login(email: _emailInpCont.text, password: _passInpCont.text);
+          }
+
           // String uid =
           //     await Auth().signIn(_emailInpCont.text, _passInpCont.text);
         },
@@ -360,38 +382,40 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     height: double.infinity,
                     child: SingleChildScrollView(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 40.0,
-                        vertical: 90.0,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Hello There.',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'OpenSans',
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 30.0),
-                          _buildEmailTF(),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                          _buildPasswordTF(),
-                          _buildForgotPasswordBtn(),
-                          _buildRememberMeCheckbox(),
-                          _buildLoginBtn(model),
-                          /*_buildSignInWithText(),
+                        physics: AlwaysScrollableScrollPhysics(),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.0,
+                          vertical: 90.0,
+                        ),
+                        child: Form(
+                          key: _formkey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                'Hello There.',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 30.0),
+                              _buildEmailTF(),
+                              SizedBox(
+                                height: 30.0,
+                              ),
+                              _buildPasswordTF(),
+                              _buildForgotPasswordBtn(),
+                              _buildRememberMeCheckbox(),
+                              _buildLoginBtn(model),
+                              /*_buildSignInWithText(),
                       _buildSocialBtnRow(),*/
-                          _buildSignupBtn(),
-                        ],
-                      ),
-                    ),
+                              _buildSignupBtn(),
+                            ],
+                          ),
+                        )),
                   )
                 ],
               ),
