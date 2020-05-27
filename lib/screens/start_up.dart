@@ -17,9 +17,9 @@ class StartUpView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(
-                width: 300,
+                width: double.infinity,
                 height: 100,
-                child: Text('Head'),
+                child: Text("SPLASH SCREEN WITH LOADING"),
               ),
               CircularProgressIndicator(
                 strokeWidth: 3,
