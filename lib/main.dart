@@ -27,14 +27,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: locator<NavigationService>().navigationKey,
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
-<<<<<<< HEAD
-        // get the Provider, and call the getUser method
         future: FirebaseAuth.instance.currentUser(),
-        // wait for the future to resolve and render the appropriate
-        // widget for HomePage or LoginPage
-=======
-        future: FirebaseAuth.instance.currentUser(),
->>>>>>> master
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return Home();

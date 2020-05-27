@@ -1,4 +1,4 @@
-import 'package:bhawik/utilities/route_names.dart';
+import 'package:bhawik/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bhawik/utilities/styles.dart';
@@ -65,16 +65,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: FlatButton(
                     onPressed: () {
                       debugPrint('Skip clicked');
-<<<<<<< HEAD
-                      Navigator.pushReplacementNamed(context, LoginViewRoute);
-                    },
-=======
-                      Navigator.pushAndRemoveUntil(context,
+                      Navigator.pushAndRemoveUntil(
+                        context,
                         MaterialPageRoute(builder: (context) => LoginScreen()),
-                          (Route<dynamic> route) => false,
+                        (Route<dynamic> route) => false,
                       );
-                  },
->>>>>>> master
+                    },
                     child: Text(
                       'Skip',
                       style: TextStyle(
@@ -224,14 +220,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-<<<<<<< HEAD
               height: 70.0,
               width: double.infinity,
               color: Colors.white,
               child: GestureDetector(
                 onTap: () {
-                  debugPrint('Sign In clicked');
-                  Navigator.pushReplacementNamed(context, LoginViewRoute);
+                  debugPrint('Skip clicked');
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                    (Route<dynamic> route) => false,
+                  );
                 },
                 child: Center(
                   child: Padding(
@@ -245,28 +244,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-=======
-        height: 70.0,
-        width: double.infinity,
-        color: Colors.white,
-        child: GestureDetector(
-          onTap: () {
-            debugPrint('Skip clicked');
-            Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (Route<dynamic> route) => false,
-            );
-          },
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 5.0),
-              child: Text(
-                'Sign In',
-                style: TextStyle(
-                  color: Color(0xFF5B16D0),
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
->>>>>>> master
                 ),
               ),
             )
