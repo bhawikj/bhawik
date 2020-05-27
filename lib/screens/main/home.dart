@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:bhawik/screens/internships.dart';
-import 'package:bhawik/screens/courses.dart';
-import 'package:bhawik/screens/cv.dart';
+import 'package:bhawik/screens/main/internships.dart';
+import 'package:bhawik/screens/main/courses.dart';
+import 'package:bhawik/screens/main/cv.dart';
 
 class Home extends StatefulWidget {
   @override

@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bhawik/utilities/constants.dart';
-import 'package:bhawik/screens/login_screen.dart';
+import 'package:bhawik/screens/auth/login_screen.dart';
 import 'package:provider_architecture/viewmodel_provider.dart';
 
 class SignupScreen extends StatefulWidget {

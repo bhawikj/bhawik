@@ -1,4 +1,4 @@
-import 'package:bhawik/screens/login_screen.dart';
+import 'package:bhawik/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bhawik/utilities/styles.dart';

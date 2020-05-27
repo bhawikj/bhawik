@@ -1,9 +1,9 @@
-import 'package:bhawik/screens/home.dart';
+import 'package:bhawik/screens/main/home.dart';
 import 'package:flutter/material.dart';
 import 'package:bhawik/utilities/route_names.dart';
-import 'package:bhawik/screens/login_screen.dart';
-import 'package:bhawik/screens/signup_screen.dart';
-import 'package:bhawik/screens/onboarding_screen.dart';
+import 'package:bhawik/screens/auth/login_screen.dart';
+import 'package:bhawik/screens/auth/signup_screen.dart';
+import 'package:bhawik/screens/auth/onboarding_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
