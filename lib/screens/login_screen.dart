@@ -267,11 +267,10 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
-        debugPrint('Skip clicked');
-        Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => SignupScreen()),
-              (Route<dynamic> route) => false,
-        );
+        debugPrint('Signup clicked');
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return SignupScreen();
+        }));
       },
       child: RichText(
         text: TextSpan(
@@ -374,29 +373,28 @@ class _LoginScreenState extends State<LoginScreen> {
     return ViewModelProvider<LoginViewModel>.withConsumer(
       viewModel: LoginViewModel(),
       builder: (context, model, child) => WillPopScope(
-        onWillPop: (){                         // => popped(), child: scaffold... FOR 2 TIMES BACK BUTTON PRESSED
+        onWillPop: () {
+          // => popped(), child: scaffold... FOR 2 TIMES BACK BUTTON PRESSED
           return showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text("Warning."),
-              content: Text("Do you want to Exit?"),
-              actions: <Widget>[
-                FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                  child: Text("Yes"),
-                ),
-                FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                    },
-                  child: Text("No"
-                  ),
-                ),
-              ],
-            )
-          ); // showDialog
+              context: context,
+              builder: (context) => AlertDialog(
+                    title: Text("Warning."),
+                    content: Text("Do you want to Exit?"),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(true);
+                        },
+                        child: Text("Yes"),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text("No"),
+                      ),
+                    ],
+                  )); // showDialog
         },
         child: new Scaffold(
           body: AnnotatedRegion<SystemUiOverlayStyle>(
