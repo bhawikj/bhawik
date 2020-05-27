@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+// import 'package:flutter_svg/flutter_svg.dart';
 
 void main() => runApp(Courses());
 
 class Courses extends StatefulWidget {
-
   final String image;
   final String textTop;
   final String textBottom;
@@ -19,34 +17,33 @@ class Courses extends StatefulWidget {
   _CoursesState createState() => _CoursesState();
 }
 
-
 class _CoursesState extends State<Courses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-            child: ClipPath(
-              clipper: MyClipper(),
-              child: Container(
-                padding: EdgeInsets.only(left: 40, top: 50, right: 20),
-                height: 350,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xFF3383CD),
-                      Color(0xFF11249F),
-                    ],
-                  ),
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/onboarding0.png"),
-                  ),
-                ),
+        child: ClipPath(
+          clipper: MyClipper(),
+          child: Container(
+            padding: EdgeInsets.only(left: 40, top: 50, right: 20),
+            height: 350,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Color(0xFF3383CD),
+                  Color(0xFF11249F),
+                ],
+              ),
+              image: DecorationImage(
+                image: AssetImage("assets/images/onboarding0.png"),
               ),
             ),
+          ),
+        ),
       ),
     );
 //          child: Stack(
