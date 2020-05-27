@@ -1,7 +1,8 @@
+import 'package:bhawik/utilities/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bhawik/utilities/styles.dart';
-import 'package:bhawik/screens/login_screen.dart';
+// import 'package:bhawik/screens/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -64,10 +65,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: FlatButton(
                     onPressed: () {
                       debugPrint('Skip clicked');
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return LoginScreen();
-                  }));
-                  },
+                      Navigator.pushReplacementNamed(context, LoginViewRoute);
+                    },
                     child: Text(
                       'Skip',
                       style: TextStyle(
@@ -178,37 +177,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 _currentPage != _numPages - 1
                     ? Expanded(
-                  child: Align(
-                    alignment: FractionalOffset.bottomRight,
-                    child: FlatButton(
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            'Next',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
+                        child: Align(
+                          alignment: FractionalOffset.bottomRight,
+                          child: FlatButton(
+                            onPressed: () {
+                              _pageController.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease,
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  'Next',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 22.0,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.white,
+                                  size: 30.0,
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(width: 10.0),
-                          Icon(
-                            Icons.arrow_forward,
-                            color: Colors.white,
-                            size: 30.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                        ),
+                      )
                     : Text(''),
               ],
             ),
@@ -217,31 +216,29 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       bottomSheet: _currentPage == _numPages - 1
           ? Container(
-        height: 70.0,
-        width: double.infinity,
-        color: Colors.white,
-        child: GestureDetector(
-          onTap: () {
-            debugPrint('Sign In clicked');
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return LoginScreen();
-            }));
-          },
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 5.0),
-              child: Text(
-                'Sign In',
-                style: TextStyle(
-                  color: Color(0xFF5B16D0),
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
+              height: 70.0,
+              width: double.infinity,
+              color: Colors.white,
+              child: GestureDetector(
+                onTap: () {
+                  debugPrint('Sign In clicked');
+                  Navigator.pushReplacementNamed(context, LoginViewRoute);
+                },
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 5.0),
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(
+                        color: Color(0xFF5B16D0),
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-        ),
-      )
+            )
           : Text(''),
     );
   }

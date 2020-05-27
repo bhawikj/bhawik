@@ -1,8 +1,11 @@
 import 'package:bhawik/locator.dart';
-import 'package:bhawik/screens/start_up.dart';
+import 'package:bhawik/screens/home.dart';
+import 'package:bhawik/screens/onboarding_screen.dart';
+// import 'package:bhawik/screens/start_up.dart';
 import 'package:bhawik/services/dialog_service.dart';
 import 'package:bhawik/services/navigation_service.dart';
 import 'package:bhawik/utilities/router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'managers/dialog_manager.dart';
 
@@ -23,7 +26,19 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: locator<NavigationService>().navigationKey,
       debugShowCheckedModeBanner: false,
-      home: StartUpView(),
+      home: FutureBuilder(
+        // get the Provider, and call the getUser method
+        future: FirebaseAuth.instance.currentUser(),
+        // wait for the future to resolve and render the appropriate
+        // widget for HomePage or LoginPage
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return Home();
+          } else {
+            return OnboardingScreen();
+          }
+        },
+      ),
       onGenerateRoute: generateRoute,
     );
   }
