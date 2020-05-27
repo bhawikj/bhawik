@@ -64,9 +64,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   child: FlatButton(
                     onPressed: () {
                       debugPrint('Skip clicked');
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return LoginScreen();
-                  }));
+                      Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                          (Route<dynamic> route) => false,
+                      );
                   },
                     child: Text(
                       'Skip',
@@ -222,10 +223,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         color: Colors.white,
         child: GestureDetector(
           onTap: () {
-            debugPrint('Sign In clicked');
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return LoginScreen();
-            }));
+            debugPrint('Skip clicked');
+            Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+                  (Route<dynamic> route) => false,
+            );
           },
           child: Center(
             child: Padding(

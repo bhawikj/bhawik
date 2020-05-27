@@ -15,11 +15,29 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
-  DateTime backbuttonPressedtime;
+  DateTime current;
   TextEditingController _emailInpCont = new TextEditingController();
   TextEditingController _passInpCont = new TextEditingController();
-
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  // 2 TIMES BACK BUTTON PRESSED UNCALLED FUNCTION.
+//  Future<bool> popped(){
+//    DateTime now = DateTime.now();
+//    //
+//    if (current == null || now.difference(current) > Duration(seconds: 2)) {
+//      current = now;
+//      Fluttertoast.showToast(
+//        msg: "Double click to exit app",
+//        backgroundColor: Colors.black,
+//        textColor: Colors.white,
+//        toastLength: Toast.LENGTH_SHORT,
+//      );
+//      return Future.value(false);
+//    }else{
+//      Fluttertoast.cancel();
+//      return Future.value(true);
+//    }
+//  }
 
   Widget _buildEmailTF() {
     return Column(
@@ -40,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 return "Email is required";
               }
               if (!EmailValidator.validate(val)) {
-                return "Enter a valid email";
+                return "Enter a valid Email";
               }
               return null;
             },
@@ -249,10 +267,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () {
-        debugPrint('Signup clicked');
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return SignupScreen();
-        }));
+        debugPrint('Skip clicked');
+        Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => SignupScreen()),
+              (Route<dynamic> route) => false,
+        );
       },
       child: RichText(
         text: TextSpan(
@@ -279,7 +298,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  @override
+  //@override
   // Widget build(BuildContext context) {
   //   return WillPopScope(
   //     onWillPop: onWillPop,
@@ -350,11 +369,35 @@ class _LoginScreenState extends State<LoginScreen> {
   //     ),
   //   );
   // }
+  @override
   Widget build(BuildContext context) {
     return ViewModelProvider<LoginViewModel>.withConsumer(
       viewModel: LoginViewModel(),
       builder: (context, model, child) => WillPopScope(
-        onWillPop: onWillPop,
+        onWillPop: (){                         // => popped(), child: scaffold... FOR 2 TIMES BACK BUTTON PRESSED
+          return showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text("Warning."),
+              content: Text("Do you want to Exit?"),
+              actions: <Widget>[
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text("Yes"),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                    },
+                  child: Text("No"
+                  ),
+                ),
+              ],
+            )
+          ); // showDialog
+        },
         child: new Scaffold(
           body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
@@ -424,21 +467,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  Future<bool> onWillPop() async {
-    DateTime currentTime = DateTime.now();
-    //
-    bool backbutton = backbuttonPressedtime == null ||
-        currentTime.difference(backbuttonPressedtime) > Duration(seconds: 3);
-    if (backbutton) {
-      backbuttonPressedtime = currentTime;
-      Fluttertoast.showToast(
-        msg: "Double click to exit app",
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-      );
-    }
-    return true;
   }
 }
