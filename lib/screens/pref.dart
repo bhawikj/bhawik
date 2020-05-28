@@ -35,10 +35,13 @@ class _PrefFormState extends State<PrefForm> {
             title: Text(prefs[index]),
             onTap: () {
               setState(() async {
-                prefs[index] = await Navigator.push(
+                var result = await Navigator.push(
                     context,
                     MaterialPageRoute<String>(
                         builder: (BuildContext context) => PrefList()));
+                if (result != "") {
+                  prefs[index] = result;
+                }
               });
             },
           );

@@ -31,41 +31,46 @@ class _PrefListState extends State<PrefList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Choose"),
-        leading: InkWell(
-          child: Icon(Icons.arrow_back),
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: <Widget>[
-            TextField(
-              decoration: new InputDecoration(labelText: "Search"),
-              controller: controller,
+    return WillPopScope(
+        onWillPop: () {
+          Navigator.pop(context, "");
+          return Future.value(false);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Choose"),
+            leading: InkWell(
+              child: Icon(Icons.arrow_back),
+              onTap: () {
+                Navigator.of(context).pop("");
+              },
             ),
-            Expanded(
-                child: ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      return filter == null || filter == ""
-                          ? _listTile(index)
-                          : items[index]
-                                  .toLowerCase()
-                                  .contains(filter.toLowerCase())
+          ),
+          body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  decoration: new InputDecoration(labelText: "Search"),
+                  controller: controller,
+                ),
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          return filter == null || filter == ""
                               ? _listTile(index)
-                              : Container();
-                    }))
-          ],
-        ),
-      ),
-    );
+                              : items[index]
+                                      .toLowerCase()
+                                      .contains(filter.toLowerCase())
+                                  ? _listTile(index)
+                                  : Container();
+                        }))
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _listTile(int index) {
