@@ -14,7 +14,13 @@ class _PrefListState extends State<PrefList> {
     items.add('Machine Learning');
     items.add('App Development');
     items.add('Web Development');
-    items.add('Cyber Security');
+    items.add('HR');
+    items.add('Data Science');
+    items.add('Data Analytics');
+    items.add('Digital Marketing');
+    items.add('Operations');
+    items.add('Graphic Designer');
+    items.add('Content Writing');
     controller.addListener(() {
       setState(() {
         filter = controller.text;
@@ -39,6 +45,7 @@ class _PrefListState extends State<PrefList> {
         child: Scaffold(
           appBar: AppBar(
             title: Text("Choose"),
+            backgroundColor: Color(0xFF4563DB),
             leading: InkWell(
               child: Icon(Icons.arrow_back),
               onTap: () {
@@ -51,9 +58,31 @@ class _PrefListState extends State<PrefList> {
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: <Widget>[
-                TextField(
-                  decoration: new InputDecoration(labelText: "Search"),
-                  controller: controller,
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  width: MediaQuery.of(context).size.width*0.95,
+                  alignment: Alignment.topLeft,
+                  decoration: BoxDecoration(
+                    color: Colors.white30,
+                    borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 6.0,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  height: 60.0,
+                  child: TextField(
+                    decoration: new InputDecoration(
+                      labelText: "Search",
+                      prefixIcon: Icon(Icons.search, color: Colors.black,),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(left: 20.0),
+                    ),
+                    controller: controller,
+                  ),
                 ),
                 Expanded(
                     child: ListView.builder(

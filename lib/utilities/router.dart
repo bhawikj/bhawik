@@ -4,6 +4,7 @@ import 'package:bhawik/utilities/route_names.dart';
 import 'package:bhawik/screens/auth/login_screen.dart';
 import 'package:bhawik/screens/auth/signup_screen.dart';
 import 'package:bhawik/screens/auth/onboarding_screen.dart';
+import 'package:bhawik/screens/pref.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -26,6 +27,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(
         routeName: settings.name,
         viewToShow: OnboardingScreen(),
+      );
+    case PrefViewRoute:
+      return _getPageRoute(
+        routeName: settings.name,
+        viewToShow: PrefForm(),
       );
     default:
       return MaterialPageRoute(

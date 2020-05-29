@@ -1,253 +1,168 @@
-import 'package:bhawik/screens/auth/login_screen.dart';
+import 'package:bhawik/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bhawik/utilities/styles.dart';
-// import 'package:bhawik/screens/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final int _numPages = 3;
-  final PageController _pageController = PageController(initialPage: 0);
-  int _currentPage = 0;
+class SliderPage extends StatelessWidget {
+  final String title;
+  final String description;
+  final String image;
 
-  List<Widget> _buildPageIndicator() {
-    List<Widget> list = [];
-    for (int i = 0; i < _numPages; i++) {
-      list.add(i == _currentPage ? _indicator(true) : _indicator(false));
-    }
-    return list;
-  }
+  SliderPage({this.title, this.description, this.image});
 
-  Widget _indicator(bool isActive) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 150),
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
-      height: 8.0,
-      width: isActive ? 24.0 : 16.0,
-      decoration: BoxDecoration(
-        color: isActive ? Colors.white : Color(0xFF7B51D3),
-        borderRadius: BorderRadius.all(Radius.circular(12)),
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
+    return Container(
+      color: Colors.white,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset( image,
+            width: width * 0.6,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            title,
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 80),
+            child: Text(
+              description,
+              style: TextStyle(
+                height: 1.5,
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+                letterSpacing: 0.7,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SizedBox(
+            height: 90,
+          ),
+        ],
       ),
     );
+  }
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+
+  int _currentPage = 0;
+  PageController _controller = PageController();
+
+  List<Widget> _pages = [
+    SliderPage(
+        title: "Internships",
+        description:
+        "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
+        image: "assets/images/onboarding0.png"),
+    SliderPage(
+        title: "CV Builder",
+        description:
+        "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
+        image: "assets/images/onboarding1.png"),
+    SliderPage(
+        title: "Career Insights",
+        description:
+        "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
+        image: "assets/images/onboarding2.png"),
+  ];
+
+  _onchanged(int index) {
+    setState(() {
+      _currentPage = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.1, 0.4, 0.7, 0.9],
-              colors: [
-                Color(0xFF3594DD),
-                Color(0xFF4563DB),
-                Color(0xFF5036D5),
-                Color(0xFF5B16D0),
-              ],
+        child: Stack(
+          children: <Widget>[
+            PageView.builder(
+              scrollDirection: Axis.horizontal,
+              onPageChanged: _onchanged,
+              controller: _controller,
+              itemCount: _pages.length,
+              itemBuilder: (context, int index) {
+                return _pages[index];
+              },
             ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Container(
-                  alignment: Alignment.centerRight,
-                  child: FlatButton(
-                    onPressed: () {
-                      debugPrint('Skip clicked');
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                        (Route<dynamic> route) => false,
-                      );
-                    },
-                    child: Text(
-                      'Skip',
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List<Widget>.generate(_pages.length, (int index) {
+                      return AnimatedContainer(
+                          duration: Duration(milliseconds: 300),
+                          height: 10,
+                          width: (index == _currentPage) ? 30 : 10,
+                          margin:
+                          EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: (index == _currentPage)
+                                  ? Color(0xFF4563DB)
+                                  : Color(0xFF4563DB).withOpacity(0.5)));
+                    })),
+                InkWell(
+                  onTap: () {
+                    (_currentPage == (_pages.length - 1)) ? Navigator.pushAndRemoveUntil(context,
+                      MaterialPageRoute(builder: (context) => SignupScreen()),
+                          (Route<dynamic> route) => false,)
+                        : _controller.nextPage(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.easeInOutQuint);
+                  },
+                  child: AnimatedContainer(
+                    alignment: Alignment.center,
+                    duration: Duration(milliseconds: 200),
+                    height: 70,
+                    width: (_currentPage == (_pages.length - 1)) ? 200 : 75,
+                    decoration: BoxDecoration(
+                        color: Color(0xFF4563DB),
+                        borderRadius: BorderRadius.circular(35)),
+                    child: (_currentPage == (_pages.length - 1))
+                        ? Text(
+                      "Get Started",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20.0,
+                        fontSize: 20,
                       ),
+                    )
+                        : Icon(
+                      Icons.navigate_next,
+                      size: 50,
+                      color: Colors.white,
                     ),
                   ),
                 ),
-                Container(
-                  height: deviceHeight * 0.750,
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/onboarding0.png',
-                                ),
-                                height: 300.0,
-                                width: 300.0,
-                              ),
-                            ),
-                            SizedBox(height: 10.0),
-                            Text(
-                              'Internships\naround the city',
-                              style: kTitleStyle,
-                            ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'Hello peeps! Onboarding itni imp h ki tum 10 sec me apna product sell kr sakte ho',
-                              style: kSubtitleStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/onboarding1.png',
-                                ),
-                                height: 300.0,
-                                width: 300.0,
-                              ),
-                            ),
-                            SizedBox(height: 30.0),
-                            Text(
-                              'Live your life smarter\nwith us!',
-                              style: kTitleStyle,
-                            ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'Hello peeps! Onboarding itni imp h ki tum 10 sec me apna product sell kr sakte ho',
-                              style: kSubtitleStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(40.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Image(
-                                image: AssetImage(
-                                  'assets/images/onboarding2.png',
-                                ),
-                                height: 300.0,
-                                width: 300.0,
-                              ),
-                            ),
-                            SizedBox(height: 30.0),
-                            Text(
-                              'Get a new experience\nof imagination',
-                              style: kTitleStyle,
-                            ),
-                            SizedBox(height: 15.0),
-                            Text(
-                              'Hello peeps! Onboarding itni imp h ki tum 10 sec me apna product sell kr sakte ho',
-                              style: kSubtitleStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: _buildPageIndicator(),
-                ),
-                _currentPage != _numPages - 1
-                    ? Expanded(
-                        child: Align(
-                          alignment: FractionalOffset.bottomRight,
-                          child: FlatButton(
-                            onPressed: () {
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  'Next',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 22.0,
-                                  ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Icon(
-                                  Icons.arrow_forward,
-                                  color: Colors.white,
-                                  size: 30.0,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    : Text(''),
+                SizedBox(
+                  height: 50,
+                )
               ],
             ),
-          ),
+          ],
         ),
       ),
-      bottomSheet: _currentPage == _numPages - 1
-          ? Container(
-              height: 70.0,
-              width: double.infinity,
-              color: Colors.white,
-              child: GestureDetector(
-                onTap: () {
-                  debugPrint('Skip clicked');
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                    (Route<dynamic> route) => false,
-                  );
-                },
-                child: Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 5.0),
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                        color: Color(0xFF5B16D0),
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : Text(''),
     );
   }
 }

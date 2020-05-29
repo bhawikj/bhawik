@@ -3,9 +3,8 @@ import 'package:bhawik/viewmodels/login_view_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bhawik/utilities/constants.dart';
+import 'package:bhawik/utilities/styles.dart';
 import 'package:bhawik/screens/auth/signup_screen.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider_architecture/viewmodel_provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -65,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: _emailInpCont,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -73,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Color(0xFF4563DB),
               ),
               hintText: 'Enter your Email',
               hintStyle: kHintTextStyle,
@@ -83,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
             controller: _passInpCont,
             obscureText: true,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: InputDecoration(
@@ -115,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
                 Icons.lock,
-                color: Colors.white,
+                color: Color(0xFF4563DB),
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -125,7 +123,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
@@ -139,17 +136,16 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
   Widget _buildRememberMeCheckbox() {
     return Container(
       height: 20.0,
       child: Row(
         children: <Widget>[
           Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
+            data: ThemeData(unselectedWidgetColor: Colors.black),
             child: Checkbox(
               value: _rememberMe,
-              checkColor: Colors.green,
+              checkColor: Color(0xFF4563DB),
               activeColor: Colors.white,
               onChanged: (value) {
                 setState(() {
@@ -166,7 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
   Widget _buildLoginBtn(LoginViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -177,11 +172,11 @@ class _LoginScreenState extends State<LoginScreen> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
-        color: Colors.white,
+        color: Color(0xFF4563DB),
         child: Text(
           'LOGIN',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -199,7 +194,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
   /*Widget _buildSignInWithText() {
     return Column(
       children: <Widget>[
@@ -268,9 +262,9 @@ class _LoginScreenState extends State<LoginScreen> {
     return GestureDetector(
       onTap: () {
         debugPrint('Signup clicked');
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return SignupScreen();
-        }));
+        Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => SignupScreen()),
+              (Route<dynamic> route) => false,);
       },
       child: RichText(
         text: TextSpan(
@@ -278,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextSpan(
               text: 'Don\'t have an Account? ',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w400,
               ),
@@ -286,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-                color: Colors.white,
+                color: Color(0xFF4563DB),
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
               ),
@@ -297,77 +291,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  //@override
-  // Widget build(BuildContext context) {
-  //   return WillPopScope(
-  //     onWillPop: onWillPop,
-  //     child: new Scaffold(
-  //       body: AnnotatedRegion<SystemUiOverlayStyle>(
-  //         value: SystemUiOverlayStyle.light,
-  //         child: GestureDetector(
-  //           onTap: () => FocusScope.of(context).unfocus(),
-  //           child: Stack(
-  //             children: <Widget>[
-  //               Container(
-  //                 height: double.infinity,
-  //                 width: double.infinity,
-  //                 decoration: BoxDecoration(
-  //                   gradient: LinearGradient(
-  //                     begin: Alignment.topCenter,
-  //                     end: Alignment.bottomCenter,
-  //                     colors: [
-  //                       Color(0xFF3594DD),
-  //                       Color(0xFF4563DB),
-  //                       Color(0xFF5036D5),
-  //                       Color(0xFF5B16D0),
-  //                     ],
-  //                     stops: [0.1, 0.4, 0.7, 0.9],
-  //                   ),
-  //                 ),
-  //               ),
-  //               Container(
-  //                 height: double.infinity,
-  //                 child: SingleChildScrollView(
-  //                   physics: AlwaysScrollableScrollPhysics(),
-  //                   padding: EdgeInsets.symmetric(
-  //                     horizontal: 40.0,
-  //                     vertical: 90.0,
-  //                   ),
-  //                   child: Column(
-  //                     mainAxisAlignment: MainAxisAlignment.center,
-  //                     children: <Widget>[
-  //                       Text(
-  //                         'Hello There.',
-  //                         style: TextStyle(
-  //                           color: Colors.white,
-  //                           fontFamily: 'OpenSans',
-  //                           fontSize: 30.0,
-  //                           fontWeight: FontWeight.bold,
-  //                         ),
-  //                       ),
-  //                       SizedBox(height: 30.0),
-  //                       _buildEmailTF(),
-  //                       SizedBox(
-  //                         height: 30.0,
-  //                       ),
-  //                       _buildPasswordTF(),
-  //                       _buildForgotPasswordBtn(),
-  //                       _buildRememberMeCheckbox(),
-  //                       _buildLoginBtn(),
-  //                       /*_buildSignInWithText(),
-  //                     _buildSocialBtnRow(),*/
-  //                       _buildSignupBtn(),
-  //                     ],
-  //                   ),
-  //                 ),
-  //               )
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<LoginViewModel>.withConsumer(
@@ -397,29 +320,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   )); // showDialog
         },
         child: new Scaffold(
+          backgroundColor: Colors.white,
           body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
             child: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Stack(
                 children: <Widget>[
-                  Container(
-                    height: double.infinity,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF3594DD),
-                          Color(0xFF4563DB),
-                          Color(0xFF5036D5),
-                          Color(0xFF5B16D0),
-                        ],
-                        stops: [0.1, 0.4, 0.7, 0.9],
-                      ),
-                    ),
-                  ),
                   Container(
                     height: double.infinity,
                     child: SingleChildScrollView(
@@ -434,9 +341,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                'Hello There.',
+                                'LOGIN',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontFamily: 'OpenSans',
                                   fontSize: 30.0,
                                   fontWeight: FontWeight.bold,
@@ -451,8 +358,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               _buildForgotPasswordBtn(),
                               _buildRememberMeCheckbox(),
                               _buildLoginBtn(model),
-                              /*_buildSignInWithText(),
-                      _buildSocialBtnRow(),*/
                               _buildSignupBtn(),
                             ],
                           ),

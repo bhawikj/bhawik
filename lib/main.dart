@@ -2,6 +2,7 @@ import 'package:bhawik/locator.dart';
 import 'package:bhawik/screens/main/home.dart';
 import 'package:bhawik/screens/auth/onboarding_screen.dart';
 import 'package:bhawik/screens/pref.dart';
+import 'package:bhawik/screens/pref_list.dart';
 // import 'package:bhawik/screens/start_up.dart';
 import 'package:bhawik/services/dialog_service.dart';
 import 'package:bhawik/services/navigation_service.dart';
@@ -27,17 +28,17 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: locator<NavigationService>().navigationKey,
       debugShowCheckedModeBanner: false,
-      home: PrefForm(),
-      // FutureBuilder(
-      //   future: FirebaseAuth.instance.currentUser(),
-      //   builder: (context, AsyncSnapshot snapshot) {
-      //     if (snapshot.hasData) {
-      //       return Home();
-      //     } else {
-      //       return OnboardingScreen();
-      //     }
-      //   },
-      // ),
+      home: //PrefList(),
+      FutureBuilder(
+         future: FirebaseAuth.instance.currentUser(),
+         builder: (context, AsyncSnapshot snapshot) {
+           if (snapshot.hasData) {
+             return Home();
+           } else {
+             return OnboardingScreen();
+           }
+         },
+       ),
       onGenerateRoute: generateRoute,
     );
   }
