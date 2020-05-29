@@ -29,11 +29,11 @@ class AuthenticationService {
     }
   }
 
-  Future signUpWithEmail({
-    @required String email,
-    @required String password,
-    @required String fullName,
-  }) async {
+  Future signUpWithEmail(
+      {@required String email,
+      @required String password,
+      @required String fullName,
+      @required List<String> prefs}) async {
     try {
       var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
@@ -42,10 +42,10 @@ class AuthenticationService {
 
       // create a new user profile on firestore
       _currentUser = User(
-        id: authResult.user.uid,
-        email: email,
-        fullName: fullName,
-      );
+          id: authResult.user.uid,
+          email: email,
+          fullName: fullName,
+          prefs: prefs);
 
       _firestoreService.createUser(_currentUser);
       debugPrint(authResult.user.uid);

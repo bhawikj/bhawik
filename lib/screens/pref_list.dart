@@ -29,11 +29,11 @@ class _PrefListState extends State<PrefList> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   controller.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _PrefListState extends State<PrefList> {
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(top: 20),
-                  width: MediaQuery.of(context).size.width*0.95,
+                  width: MediaQuery.of(context).size.width * 0.95,
                   alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
                     color: Colors.white30,
@@ -77,7 +77,10 @@ class _PrefListState extends State<PrefList> {
                   child: TextField(
                     decoration: new InputDecoration(
                       labelText: "Search",
-                      prefixIcon: Icon(Icons.search, color: Colors.black,),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.only(left: 20.0),
                     ),
@@ -108,6 +111,7 @@ class _PrefListState extends State<PrefList> {
       onTap: () {
         debugPrint(items[index]);
         Navigator.pop(context, items[index]);
+        items.removeAt(index);
       },
     );
   }

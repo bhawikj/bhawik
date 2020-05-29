@@ -21,24 +21,25 @@ class SignUpViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future signUp({
-    @required String email,
-    @required String password,
-    @required String fullName,
-  }) async {
+  Future signUp(
+      {@required String email,
+      @required String password,
+      @required String fullName,
+      @required List<String> prefs}) async {
     setBusy(true);
 
     var result = await _authenticationService.signUpWithEmail(
       email: email,
       password: password,
       fullName: fullName,
+      prefs: prefs,
     );
-
     setBusy(false);
-
+    debugPrint(result);
     if (result is bool) {
       if (result) {
-        _navigationService.navigateTo(PrefViewRoute);
+        // _navigationService.navigateTo(PrefViewRoute);
+
       } else {
         await _dialogService.showDialog(
           title: 'Sign Up Failure',

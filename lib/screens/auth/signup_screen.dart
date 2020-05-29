@@ -1,4 +1,5 @@
 // import 'package:bhawik/models/user.dart';
+import 'package:bhawik/screens/pref.dart';
 import 'package:bhawik/viewmodels/signup_view_model.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,7 @@ class _SignupState extends State<SignupScreen> {
       ],
     );
   }
+
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,6 +111,7 @@ class _SignupState extends State<SignupScreen> {
       ],
     );
   }
+
   Widget _buildPasswordTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,6 +153,7 @@ class _SignupState extends State<SignupScreen> {
       ],
     );
   }
+
   Widget _buildSignupBtn(SignUpViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
@@ -176,7 +180,14 @@ class _SignupState extends State<SignupScreen> {
             model.signUp(
                 email: emailInpCont.text,
                 password: passInpCont.text,
-                fullName: nameInpCont.text);
+                fullName: nameInpCont.text,
+                prefs: []);
+
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => PrefForm()),
+              (Route<dynamic> route) => false,
+            );
           } else {
             debugPrint("Error\nerror");
           }
@@ -188,13 +199,15 @@ class _SignupState extends State<SignupScreen> {
       ),
     );
   }
+
   Widget _buildloginBtn() {
     return GestureDetector(
       onTap: () {
         debugPrint('Login clicked');
-        Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-              (Route<dynamic> route) => false);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (Route<dynamic> route) => false);
       },
       child: RichText(
         text: TextSpan(
@@ -288,84 +301,83 @@ class _SignupState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return ViewModelProvider<SignUpViewModel>.withConsumer(
-        viewModel: SignUpViewModel(),
-        builder: (context, model, child) => WillPopScope(
-        onWillPop: () {
-          return showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text("Warning."),
-                content: Text("Do you want to Exit?"),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(true);
-                    },
-                    child: Text("Yes"),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                    },
-                    child: Text("No"),
-                  ),
-                ],
-              )); // showDia
-        },
-        child: new Scaffold(
-        backgroundColor: Colors.white,
-              body: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: SystemUiOverlayStyle.light,
-                child: GestureDetector(
-                  onTap: () => FocusScope.of(context).unfocus(),
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        height: double.infinity,
-                        child: SingleChildScrollView(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 40.0,
-                              vertical: 90.0,
-                            ),
-                            child: Form(
-                              key: _formkey,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    'Hello There!',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'OpenSans',
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+      viewModel: SignUpViewModel(),
+      builder: (context, model, child) => WillPopScope(
+          onWillPop: () {
+            return showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: Text("Warning."),
+                      content: Text("Do you want to Exit?"),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(true);
+                          },
+                          child: Text("Yes"),
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                          child: Text("No"),
+                        ),
+                      ],
+                    )); // showDia
+          },
+          child: new Scaffold(
+            backgroundColor: Colors.white,
+            body: AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: double.infinity,
+                      child: SingleChildScrollView(
+                          physics: AlwaysScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 40.0,
+                            vertical: 90.0,
+                          ),
+                          child: Form(
+                            key: _formkey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  'Hello There!',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'OpenSans',
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  SizedBox(height: 30.0),
-                                  _buildNameTF(),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  _buildEmailTF(),
-                                  SizedBox(
-                                    height: 20.0,
-                                  ),
-                                  _buildPasswordTF(),
-                                  _buildSignupBtn(model),
-                                  _buildloginBtn(),
-                                  /*_buildSignInWithText(),
+                                ),
+                                SizedBox(height: 30.0),
+                                _buildNameTF(),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                _buildEmailTF(),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                _buildPasswordTF(),
+                                _buildSignupBtn(model),
+                                _buildloginBtn(),
+                                /*_buildSignInWithText(),
                                   _buildSocialBtnRow(),*/
-                                ],
-                              ),
-                            )),
-                      )
-                    ],
-                  ),
+                              ],
+                            ),
+                          )),
+                    )
+                  ],
                 ),
               ),
-            )
-        ),
+            ),
+          )),
     );
   }
 }
