@@ -29,16 +29,18 @@ class MyApp extends StatelessWidget {
       navigatorKey: locator<NavigationService>().navigationKey,
       debugShowCheckedModeBanner: false,
       home: //Home(),
-      FutureBuilder(
-         future: FirebaseAuth.instance.currentUser(),
-         builder: (context, AsyncSnapshot snapshot) {
-           if (snapshot.hasData) {
-             return Home();
-           } else {
-             return OnboardingScreen();
-           }
-         },
-       ),
+          FutureBuilder(
+        future: FirebaseAuth.instance.currentUser(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData &&
+              snapshot.connectionState == ConnectionState.done) {
+            print(snapshot.data);
+            return Home();
+          } else {
+            return OnboardingScreen();
+          }
+        },
+      ),
       onGenerateRoute: generateRoute,
     );
   }

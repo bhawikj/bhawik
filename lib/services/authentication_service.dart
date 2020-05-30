@@ -22,7 +22,8 @@ class AuthenticationService {
       ))
           .user;
       debugPrint(user.email);
-      _populateCurrentUser(user);
+      populateCurrentUser();
+
       return user != null;
     } catch (e) {
       return e.message;
@@ -57,13 +58,17 @@ class AuthenticationService {
 
   Future<bool> isUserLoggedIn() async {
     var user = await _firebaseAuth.currentUser();
-    _populateCurrentUser(user);
+    populateCurrentUser();
     return user != null;
   }
 
-  Future _populateCurrentUser(FirebaseUser user) async {
+  Future<String> populateCurrentUser() async {
+    var user = await _firebaseAuth.currentUser();
+    debugPrint(user.uid + "_____");
     if (user != null) {
       _currentUser = await _firestoreService.getUser(user.uid);
+      debugPrint(_currentUser.getId);
     }
+    return user.uid;
   }
 }

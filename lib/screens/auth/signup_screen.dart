@@ -175,7 +175,7 @@ class _SignupState extends State<SignupScreen> {
             fontFamily: 'OpenSans',
           ),
         ),
-        onPressed: () async {
+        onPressed: () {
           if (_formkey.currentState.validate()) {
             model.signUp(
                 email: emailInpCont.text,

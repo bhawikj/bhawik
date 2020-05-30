@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
 class PrefList extends StatefulWidget {
+  final List<String> prefs;
+
+  const PrefList({Key key, this.prefs}) : super(key: key);
   @override
-  _PrefListState createState() => _PrefListState();
+  _PrefListState createState() => _PrefListState(prefs);
 }
 
 class _PrefListState extends State<PrefList> {
+  final List<String> prefs;
   List<String> items = [];
   TextEditingController controller = new TextEditingController();
   String filter;
+
+  _PrefListState(this.prefs);
   @override
   void initState() {
     items.add('Machine Learning');
@@ -21,6 +27,9 @@ class _PrefListState extends State<PrefList> {
     items.add('Operations');
     items.add('Graphic Designer');
     items.add('Content Writing');
+    for (var item in prefs) {
+      items.remove(item);
+    }
     controller.addListener(() {
       setState(() {
         filter = controller.text;
@@ -111,7 +120,6 @@ class _PrefListState extends State<PrefList> {
       onTap: () {
         debugPrint(items[index]);
         Navigator.pop(context, items[index]);
-        items.removeAt(index);
       },
     );
   }

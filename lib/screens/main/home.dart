@@ -1,15 +1,19 @@
+import 'package:bhawik/locator.dart';
 import 'package:bhawik/screens/auth/login_screen.dart';
 import 'package:bhawik/screens/main/About.dart';
 import 'package:bhawik/screens/main/Contact.dart';
 import 'package:bhawik/screens/main/Work.dart';
 import 'package:bhawik/screens/main/update.dart';
+import 'package:bhawik/services/authentication_service.dart';
+import 'package:bhawik/services/firestore_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:bhawik/models/user.dart' as userModel;
 import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:bhawik/screens/main/internships.dart';
 import 'package:bhawik/screens/main/courses.dart';
 import 'package:bhawik/screens/main/cv.dart';
 import 'package:bhawik/screens/pref.dart';
-
 
 class Home extends StatefulWidget {
   @override
@@ -24,9 +28,19 @@ final _pageoption = [
 ];
 
 class HomeState extends State<Home> {
+  // final AuthenticationService _authService = locator<AuthenticationService>();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirestoreService _firestoreService = locator<FirestoreService>();
+  userModel.User _currentUser;
 
+  String _uid;
   int _currentIndex = 1;
   FSBStatus drawerStatus;
+  @override
+  void initState() {
+    _initUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,25 +49,31 @@ class HomeState extends State<Home> {
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> Update("Saved Internships")),
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Update("Saved Internships")),
               );
               debugPrint("Pressed Saved Internships");
             },
             icon: Icon(Icons.favorite, color: Colors.red),
           ),
           IconButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PrefForm()),
+                MaterialPageRoute(
+                    builder: (context) => PrefForm(
+                          currentUser: _currentUser,
+                        )),
               );
             },
             icon: Icon(Icons.filter_list, color: Color(0xFF4563DB)),
           )
         ],
-        title:Text("Internships",style: TextStyle(color: Colors.black)),
+        title: Text("Internships", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Color(0xFF4563DB)),
       ),
@@ -68,17 +88,11 @@ class HomeState extends State<Home> {
         unselectedItemColor: Colors.black26,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('CV Builder')
-          ),
+              icon: Icon(Icons.home), title: Text('CV Builder')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.trending_up),
-              title: Text('Home')
-          ),
+              icon: Icon(Icons.trending_up), title: Text('Home')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              title: Text('Insights')
-          ),
+              icon: Icon(Icons.dashboard), title: Text('Insights')),
         ],
         onTap: (index) {
           setState(() {
@@ -88,11 +102,17 @@ class HomeState extends State<Home> {
       ),
     );
   }
+
+  void _initUser() async {
+    var user = await _firebaseAuth.currentUser();
+    _uid = user.uid;
+    _currentUser = await _firestoreService.getUser(user.uid).whenComplete(() {
+      print("complete");
+    });
+  }
 }
 
-
 class MainDrawer extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -117,9 +137,11 @@ class MainDrawer extends StatelessWidget {
                 ],
               )),
           ListTile(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> About("About")),
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => About("About")),
               );
               debugPrint("Tapped About");
             },
@@ -135,7 +157,9 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> Contact("Contact Us")),
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => Contact("Contact Us")),
               );
               debugPrint("Tapped Contact");
             },
@@ -149,7 +173,9 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> Work("Work With Us")),
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => Work("Work With Us")),
               );
               debugPrint("Tapped Work");
             },
@@ -163,7 +189,10 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> Update("Update Password")),
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Update("Update Password")),
               );
               debugPrint("Tapped Update Password");
             },
@@ -177,7 +206,9 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               Navigator.of(context).pop();
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> LoginScreen()),
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                    builder: (BuildContext context) => LoginScreen()),
               );
               debugPrint("Tapped Log Out");
             },
