@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       navigatorKey: locator<NavigationService>().navigationKey,
       debugShowCheckedModeBanner: false,
-      home: //PrefList(),
+      home: //Home(),
       FutureBuilder(
          future: FirebaseAuth.instance.currentUser(),
          builder: (context, AsyncSnapshot snapshot) {
