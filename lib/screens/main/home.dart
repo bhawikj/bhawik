@@ -9,7 +9,6 @@ import 'package:bhawik/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bhawik/models/user.dart' as userModel;
-import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:bhawik/screens/main/internships.dart';
 import 'package:bhawik/screens/main/courses.dart';
 import 'package:bhawik/screens/main/cv.dart';
@@ -35,7 +34,6 @@ class HomeState extends State<Home> {
 
   String _uid;
   int _currentIndex = 1;
-  FSBStatus drawerStatus;
   @override
   void initState() {
     _initUser();
