@@ -10,23 +10,24 @@ class PrefList extends StatefulWidget {
 
 class _PrefListState extends State<PrefList> {
   final List<String> prefs;
-  List<String> items = [];
+  List<String> items = [
+    'Machine Learning',
+    'App Development',
+    'Web Development',
+    'HR',
+    'Data Science',
+    'Data Analytics',
+    'Digital Marketing',
+    'Operations',
+    'Graphic Designer',
+    'Content Writing'
+  ];
   TextEditingController controller = new TextEditingController();
   String filter;
 
   _PrefListState(this.prefs);
   @override
   void initState() {
-    items.add('Machine Learning');
-    items.add('App Development');
-    items.add('Web Development');
-    items.add('HR');
-    items.add('Data Science');
-    items.add('Data Analytics');
-    items.add('Digital Marketing');
-    items.add('Operations');
-    items.add('Graphic Designer');
-    items.add('Content Writing');
     for (var item in prefs) {
       items.remove(item);
     }

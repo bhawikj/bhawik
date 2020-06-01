@@ -1,8 +1,7 @@
-import 'package:bhawik/utilities/route_names.dart';
 import 'package:bhawik/locator.dart';
 import 'package:bhawik/services/authentication_service.dart';
 import 'package:bhawik/services/dialog_service.dart';
-import 'package:bhawik/services/navigation_service.dart';
+// import 'package:bhawik/services/navigation_service.dart';
 import 'package:flutter/foundation.dart';
 
 import 'base_model.dart';
@@ -11,7 +10,7 @@ class SignUpViewModel extends BaseModel {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final DialogService _dialogService = locator<DialogService>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  // final NavigationService _navigationService = locator<NavigationService>();
 
   String _selectedRole = 'Select a User Role';
   String get selectedRole => _selectedRole;

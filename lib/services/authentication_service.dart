@@ -72,3 +72,14 @@ class AuthenticationService {
     return user.uid;
   }
 }
+
+Future<User> getUser() async {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirestoreService _firestoreService = locator<FirestoreService>();
+  var user = await _firebaseAuth.currentUser();
+  User _currentUser =
+      await _firestoreService.getUser(user.uid).whenComplete(() {
+    print("complete");
+  });
+  return _currentUser;
+}

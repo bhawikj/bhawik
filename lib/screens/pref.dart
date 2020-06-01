@@ -7,8 +7,8 @@ import 'package:bhawik/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bhawik/viewmodels/signup_view_model.dart';
-import 'package:bhawik/screens/auth/signup_screen.dart';
+// import 'package:bhawik/viewmodels/signup_view_model.dart';
+// import 'package:bhawik/screens/auth/signup_screen.dart';
 import 'package:bhawik/services/authentication_service.dart';
 
 class PrefForm extends StatefulWidget {
@@ -21,9 +21,9 @@ class PrefForm extends StatefulWidget {
 }
 
 class _PrefFormState extends State<PrefForm> {
-  // final AuthenticationService _authService = locator<AuthenticationService>();
+  final AuthenticationService _authService = locator<AuthenticationService>();
   final FirestoreService _firestoreService = locator<FirestoreService>();
-  // final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final User _currentUser;
   String _uid;
   List<String> prefs = [
@@ -34,7 +34,9 @@ class _PrefFormState extends State<PrefForm> {
 
   @override
   void initState() {
-    _getUser();
+    _getUser().whenComplete(() {
+      print("prefinit");
+    });
 
     super.initState();
   }
@@ -88,7 +90,7 @@ class _PrefFormState extends State<PrefForm> {
                       onPressed: () {
                         // var _uid = _authService.currentUser.id;
                         _firestoreService.updateUser(_uid, prefs);
-                        debugPrint(_uid + "____*_");
+                        print(_uid != null);
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => Home()),
@@ -154,13 +156,29 @@ class _PrefFormState extends State<PrefForm> {
 
     // var id = await _authService.populateCurrentUser();
     // debugPrint("*******$id");
+    print(_currentUser == null);
+    // if (_currentUser == null) {
+    //   print("if statement");
+    //   User currentUser;
+    //   currentUser = await getUser().whenComplete(() {
+    //     print("if innit");
+    //   });
+    //   _uid = currentUser.getId;
+    //   prefs = currentUser.prefs;
+    //   print(prefs);
+    //   print(_uid);
+    //   if (prefs.length < 3) {
+    //     prefs.add("Add your preference.");
+    //     print("******");
+    //   }
+    // } else {
     _uid = _currentUser.getId;
     prefs = _currentUser.prefs;
     print(prefs);
     print(_uid);
     if (prefs.length < 3) {
       prefs.add("Add your preference.");
-      print("******");
+      print("******" + _uid);
     }
   }
 }

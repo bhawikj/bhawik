@@ -1,12 +1,10 @@
-import 'package:bhawik/locator.dart';
 import 'package:bhawik/screens/auth/login_screen.dart';
 import 'package:bhawik/screens/main/About.dart';
 import 'package:bhawik/screens/main/Contact.dart';
 import 'package:bhawik/screens/main/Work.dart';
 import 'package:bhawik/screens/main/update.dart';
 import 'package:bhawik/services/authentication_service.dart';
-import 'package:bhawik/services/firestore_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:bhawik/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:bhawik/models/user.dart' as userModel;
 import 'package:bhawik/screens/main/internships.dart';
@@ -28,11 +26,11 @@ final _pageoption = [
 
 class HomeState extends State<Home> {
   // final AuthenticationService _authService = locator<AuthenticationService>();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirestoreService _firestoreService = locator<FirestoreService>();
+  //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  //final FirestoreService _firestoreService = locator<FirestoreService>();
   userModel.User _currentUser;
 
-  String _uid;
+  // String _uid;
   int _currentIndex = 1;
   @override
   void initState() {
@@ -102,10 +100,10 @@ class HomeState extends State<Home> {
   }
 
   void _initUser() async {
-    var user = await _firebaseAuth.currentUser();
-    _uid = user.uid;
-    _currentUser = await _firestoreService.getUser(user.uid).whenComplete(() {
-      print("complete");
+    //var user = await _firebaseAuth.currentUser();
+    // _uid = user.uid;
+    _currentUser = await getUser().whenComplete(() {
+      print("home innit");
     });
   }
 }

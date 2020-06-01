@@ -1,4 +1,6 @@
 // import 'package:bhawik/models/user.dart';
+import 'package:bhawik/models/user.dart';
+import 'package:bhawik/services/authentication_service.dart';
 import 'package:bhawik/screens/pref.dart';
 import 'package:bhawik/viewmodels/signup_view_model.dart';
 import 'package:email_validator/email_validator.dart';
@@ -15,8 +17,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupState extends State<SignupScreen> {
   bool _rememberMe = false;
-  // User user = User();
-
+  User _currentUser;
   TextEditingController nameInpCont = new TextEditingController();
   TextEditingController emailInpCont = new TextEditingController();
   TextEditingController passInpCont = new TextEditingController();
@@ -181,13 +182,18 @@ class _SignupState extends State<SignupScreen> {
                 email: emailInpCont.text,
                 password: passInpCont.text,
                 fullName: nameInpCont.text,
-                prefs: []);
-
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => PrefForm()),
-              (Route<dynamic> route) => false,
-            );
+                prefs: []).whenComplete(() async {
+              await _getUser().whenComplete(() {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PrefForm(
+                            currentUser: _currentUser,
+                          )),
+                  (Route<dynamic> route) => false,
+                );
+              });
+            });
           } else {
             debugPrint("Error\nerror");
           }
@@ -379,5 +385,11 @@ class _SignupState extends State<SignupScreen> {
             ),
           )),
     );
+  }
+
+  Future<void> _getUser() async {
+    _currentUser = await getUser().whenComplete(() {
+      print("signup innit");
+    });
   }
 }

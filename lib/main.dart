@@ -1,8 +1,6 @@
 import 'package:bhawik/locator.dart';
 import 'package:bhawik/screens/main/home.dart';
 import 'package:bhawik/screens/auth/onboarding_screen.dart';
-import 'package:bhawik/screens/pref.dart';
-import 'package:bhawik/screens/pref_list.dart';
 // import 'package:bhawik/screens/start_up.dart';
 import 'package:bhawik/services/dialog_service.dart';
 import 'package:bhawik/services/navigation_service.dart';

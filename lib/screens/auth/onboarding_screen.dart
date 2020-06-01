@@ -23,7 +23,8 @@ class SliderPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset( image,
+          Image.asset(
+            image,
             width: width * 0.6,
           ),
           SizedBox(
@@ -59,7 +60,6 @@ class SliderPage extends StatelessWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-
   int _currentPage = 0;
   PageController _controller = PageController();
 
@@ -67,17 +67,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     SliderPage(
         title: "Internships",
         description:
-        "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
+            "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
         image: "assets/images/onboarding0.png"),
     SliderPage(
         title: "CV Builder",
         description:
-        "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
+            "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
         image: "assets/images/onboarding1.png"),
     SliderPage(
         title: "Career Insights",
         description:
-        "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
+            "Hello peeps! Onbaording itni imp hai ki tum 10sec me apna product sell kr sakte ho",
         image: "assets/images/onboarding2.png"),
   ];
 
@@ -89,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
+    // double deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -116,7 +116,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           height: 10,
                           width: (index == _currentPage) ? 30 : 10,
                           margin:
-                          EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 30),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               color: (index == _currentPage)
@@ -125,12 +125,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     })),
                 InkWell(
                   onTap: () {
-                    (_currentPage == (_pages.length - 1)) ? Navigator.pushAndRemoveUntil(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()),
-                          (Route<dynamic> route) => false,)
+                    (_currentPage == (_pages.length - 1))
+                        ? Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignupScreen()),
+                            (Route<dynamic> route) => false,
+                          )
                         : _controller.nextPage(
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeInOutQuint);
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOutQuint);
                   },
                   child: AnimatedContainer(
                     alignment: Alignment.center,
@@ -142,17 +146,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         borderRadius: BorderRadius.circular(35)),
                     child: (_currentPage == (_pages.length - 1))
                         ? Text(
-                      "Get Started",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    )
+                            "Get Started",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          )
                         : Icon(
-                      Icons.navigate_next,
-                      size: 50,
-                      color: Colors.white,
-                    ),
+                            Icons.navigate_next,
+                            size: 50,
+                            color: Colors.white,
+                          ),
                   ),
                 ),
                 SizedBox(
