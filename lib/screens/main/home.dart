@@ -30,6 +30,8 @@ class HomeState extends State<Home> {
   //final FirestoreService _firestoreService = locator<FirestoreService>();
   userModel.User _currentUser;
 
+  int _prefbtnCount = 0;
+
   // String _uid;
   int _currentIndex = 1;
   @override
@@ -58,18 +60,20 @@ class HomeState extends State<Home> {
           ),
           IconButton(
             onPressed: () {
+              _prefbtnCount = 1;
               Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => PrefForm(
-                          currentUser: _currentUser,
-                        )),
+                          currentUser: _currentUser, prefbtnCount : _prefbtnCount)
+                ),
               );
+              _prefbtnCount = 0;
             },
             icon: Icon(Icons.filter_list, color: Color(0xFF4563DB)),
           )
         ],
-        title: Text("Internships", style: TextStyle(color: Colors.black)),
+        title: Text("Interncity", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Color(0xFF4563DB)),
       ),

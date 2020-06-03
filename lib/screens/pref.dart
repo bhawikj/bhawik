@@ -13,24 +13,28 @@ import 'package:bhawik/services/authentication_service.dart';
 
 class PrefForm extends StatefulWidget {
   final User currentUser;
+  final int prefbtnCount;
 
-  const PrefForm({Key key, this.currentUser}) : super(key: key);
+  const PrefForm({Key key, this.currentUser, this.prefbtnCount}) : super(key: key);
 
   @override
-  _PrefFormState createState() => _PrefFormState(currentUser);
+  _PrefFormState createState() => _PrefFormState(currentUser,prefbtnCount);
 }
 
 class _PrefFormState extends State<PrefForm> {
   final AuthenticationService _authService = locator<AuthenticationService>();
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   final User _currentUser;
+  int _prefbtnCount;
+
   String _uid;
   List<String> prefs = [
     "Add your preference.",
   ];
 
-  _PrefFormState(this._currentUser);
+  _PrefFormState(this._currentUser, this._prefbtnCount);
 
   @override
   void initState() {
@@ -51,6 +55,7 @@ class _PrefFormState extends State<PrefForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+
                   Text(
                     'Select Field of Internships',
                     style: TextStyle(
@@ -67,6 +72,7 @@ class _PrefFormState extends State<PrefForm> {
                     child: _selector(context),
                   ),
                   SizedBox(height: 0.0),
+
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 25.0),
                     width: 160,
@@ -77,8 +83,17 @@ class _PrefFormState extends State<PrefForm> {
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                       color: Color(0xFF4563DB),
-                      child: Text(
+                      child: _prefbtnCount == 1 ? Text(
                         'SIGN UP',
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.5,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ) : Text(
+                        'UPDATE',
                         style: TextStyle(
                           color: Colors.white,
                           letterSpacing: 1.5,
@@ -149,6 +164,7 @@ class _PrefFormState extends State<PrefForm> {
         });
   }
 
+
   Future _getUser() async {
     // var user = await _firebaseAuth.currentUser();
     // _uid = user.uid;
@@ -182,3 +198,4 @@ class _PrefFormState extends State<PrefForm> {
     }
   }
 }
+
