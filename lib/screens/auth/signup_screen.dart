@@ -188,7 +188,7 @@ class _SignupState extends State<SignupScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => PrefForm(
-                            currentUser: _currentUser,
+                            currentUser: _currentUser,prefbtnCount: 1,
                           )),
                   (Route<dynamic> route) => false,
                 );
